@@ -176,6 +176,10 @@ app.UseEndpoints(endpoints => {
 	endpoints.MapDefaultControllerRoute();
 });
 
+
+
+
+Using the Null Conditional Operator
 -------------------- To check wether class o properties is null if null dont cause error
 
 
@@ -183,4 +187,57 @@ app.UseEndpoints(endpoints => {
 decimal? price = p?.Price;
 
 
+
+
+
+
+
+#region Chaining 
+Chaining in  class or Model class to deal wiith null/
+	it means that each class has another class which it relates
+
+
+    public class Product
+{
+    public string Name { get; set; }
+    public decimal? Price { get; set; }
+
+    public Product Related { get; set; }  /// <summary>
+                                          /// fur chaining
+                                          /// </summary>
+                                          /// <returns></returns>
+    public static Product[] GetProducts()
+    {
+        Product kayak = new Product
+        {
+            Name = "Kayak",
+            Price = 275M
+        };
+        Product lifejacket = new Product
+        {
+            Name = "Lifejacket",
+            Price = 48.95M
+        };
+
+        kayak.Related = lifejacket;   //chaining
+        return new Product[] { kayak, lifejacket, null };
+    }
+
+
+    using chaining in Controller
+
+    string relatedName = p?.Related?.Name;  // each of them can be null so p?.Related?
+results.Add(string.Format("Name: {0}, Price: {1}, Related: {2}",
+name, price, relatedName));
+
+
+
+
+Combining the Conditional and Coalescing Operators
+-------------------------------------------
+
+string name = p?.Name ?? "<No Name>";
+decimal? price = p?.Price ?? 0;
+string relatedName = p?.Related?.Name ?? "<None>";
+#endregion
 
