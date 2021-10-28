@@ -157,3 +157,30 @@ dotnet tool install --global Microsoft.Web.LibraryManager.Cli --version 2.0.96
 
 
 
+
+	------------------------------------------
+
+
+
+	Enabling the MVC Framework
+
+
+	public void ConfigureServices(IServiceCollection services)
+{
+	services.AddControllersWithViews();  ///add this 
+}
+app.UseEndpoints(endpoints => {
+	//endpoints.MapGet("/", async context => {
+	// await context.Response.WriteAsync("Hello World!");
+	//});
+	endpoints.MapDefaultControllerRoute();
+});
+
+-------------------- To check wether class o properties is null if null dont cause error
+
+
+	string name = p?.Name;
+decimal? price = p?.Price;
+
+
+
