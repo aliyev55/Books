@@ -137,3 +137,23 @@ dotnet new sln -o MySolution
 dotnet sln MySolution add MySolution/MyProject
 
 
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 3.1.1   // to add package
+
+
+dotnet list package   // to list package
+
+dotnet tool uninstall --global dotnet-ef       // to uninstlaa tools
+dotnet tool install --global dotnet-ef --version 3.1.1    // add tools to communicate with db;
+
+
+dotnet ef --help  
+
+Client-side packages contain content that is delivered to the client, such as images, CSS stylesheets, JavaScript files, and static
+HTML.
+
+	dotnet tool uninstall --global Microsoft.Web.LibraryManager.Cli
+dotnet tool install --global Microsoft.Web.LibraryManager.Cli --version 2.0.96
+
+
+
+
