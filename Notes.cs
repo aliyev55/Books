@@ -102,5 +102,38 @@ mesaji yaninda cixarmaq ucun
 #endregion
 
 
+--------------------------------------
+dot net command line COMMANDS
 
-My Comments
+
+dotnet new   //Creating a project
+
+
+dotnet build && dotnet run  //Building and running
+dotnet add package
+
+dotnet tool  // Installing tool
+
+libman //Managing client-side packages
+
+
+dotnet new : Templates =>
+
+web  //creates a project that is set up with the minimum code
+mvc //ASP.NET Core project configured to use the MVC Framework.
+
+webapp //ASP.NET Core project configured to use Razor Pages
+blazorserver //ASP.NET Core project configured to use Blazor Server
+angular
+react
+reactredux
+
+globaljson  //add globaljson
+sln    // add sln
+
+dotnet new globaljson --sdk-version 3.1.101 --output MySolution/MyProject
+dotnet new web --no-https --output MySolution/MyProject --framework netcoreapp3.1
+dotnet new sln -o MySolution
+dotnet sln MySolution add MySolution/MyProject
+
+
