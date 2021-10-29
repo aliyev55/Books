@@ -399,7 +399,16 @@ its arguments) with its implementation
 
     ----------Type Inference and Anonymous Types---------------------------------
 
+
+
+
+    --------- Feateure nameOf
+
+
+    return View(products.Select(p =>
+$"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}")); => result is Name:Vusal  Price: 10trl
+
 #endregion
 
 
-
+-------
