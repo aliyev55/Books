@@ -331,6 +331,66 @@ Creating Filtering Extension Methods
         }
     }
 
+
+  
+    for filtering good example
+        // filter extension elave edilir
+            public static IEnumerable<Product> Filter(this IEnumerable<Product> productEnum, Func<Product, bool> selector)
+        {
+            foreach (Product prod in productEnum)
+            {
+                if (selector(prod))
+                {
+                    yield return prod;
+                }
+            }
+        }
+
+
+    // funksiyalar yazilir
+    sTAND alone function to pass to filter
+
+        bool FilterByPrice(Product p)
+    {
+        return (p?.Price ?? 0) >= 20;
+    }
+    Func<Product, bool> nameFilter = delegate (Product prod) {
+        return prod?.Name?[0] == 'S';
+    };
+
+    // 
+    // sonra filtrelemeye oturulur
+    decimal priceFilterTotal = productArray
+.Filter(FilterByPrice)
+.TotalPrices();
+    decimal nameFilterTotal = productArray
+    .Filter(nameFilter)
+    .TotalPrices();
+
+
+
+
+    bu sekildede yazila biler:
+
+        decimal priceFilterTotal = productArray
+.Filter(p => (p?.Price ?? 0) >= 20)
+.TotalPrices();
+    decimal nameFilterTotal = productArray
+    .Filter(p => p?.Name?[0] == 'S')
+    .TotalPrices();
+
+
+
+   action with lambda
+
+        public ViewResult Index() =>
+View(Product.GetProducts().Select(p => p?.Name));
+}
+
+
+
+   --------------------
+
 #endregion
 
 
