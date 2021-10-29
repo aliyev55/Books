@@ -241,3 +241,97 @@ decimal? price = p?.Price ?? 0;
 string relatedName = p?.Related?.Name ?? "<None>";
 #endregion
 
+#region C# features
+
+Enable NULLABLE
+to enable nullable open edit Project File -> right click project and select EDIT PROJECT FILE and change ::
+
+
+    <PropertyGroup>
+<TargetFramework>netcoreapp3.1</TargetFramework>
+<Nullable>enable</Nullable>
+</PropertyGroup>
+    ---------------------------------------------------------------
+
+
+
+    C# supports automatically implemented properties
+    public string Name { get; set; }
+public decimal? Price { get; set; }
+public Product Related { get; set; }
+
+public string Name { get; set; }
+...
+is equivalent to the following code:
+...
+public string Name
+{
+    get { return name; }
+    set { name = value; }
+}
+
+This feature allows me to define properties without having to implement the get and set bodies
+
+
+    string interpolation :
+
+    string.Format("Name: {0}, Price: {1}, Related: {2}",name, price, relatedName)
+
+
+---------------------------------------------------------------------------------------------
+
+    Using an Index Initializer
+
+    Dictionary<string, Product> products = new Dictionary<string, Product> {
+{ "Kayak", new Product { Name = "Kayak", Price = 275M } },
+{ "Lifejacket", new Product{ Name = "Lifejacket", Price = 48.95M } }
+};
+return View("Index", products.Keys);
+
+new version of C#  
+
+    Dictionary<string, Product> products = new Dictionary<string, Product>
+    {
+        ["Kayak"] = new Product { Name = "Kayak", Price = 275M },
+        ["Lifejacket"] = new Product { Name = "Lifejacket", Price = 48.95M }
+    }
+
+
+
+    new version of Switch
+{
+
+
+    switch (data[i])
+    {
+        case decimal decimalValue:    //if decimal do 
+            total += decimalValue;
+            break;
+        case int intValue when intValue > 50: ///if intiger
+            total += intValue;
+            break;
+
+
+
+    }
+
+
+    case decimal decimalValue:  !!!This case statement matches any decimal value and assigns it to a new variable called decimalValue
+
+-----------------------------------------------------------------------------------
+Creating Filtering Extension Methods
+          public static IEnumerable<Product> FilterByPrice(this IEnumerable<Product> productEnum, decimal minimumPrice)
+    {
+        foreach (Product prod in productEnum)
+        {
+            if ((prod?.Price ?? 0) >= minimumPrice)
+            {
+                yield return prod;   ///YIELD LIST SEKLINDE DONUR
+            }
+        }
+    }
+
+#endregion
+
+
+
