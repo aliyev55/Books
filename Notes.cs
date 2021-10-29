@@ -387,9 +387,17 @@ Creating Filtering Extension Methods
 View(Product.GetProducts().Select(p => p?.Name));
 }
 
+Lambda expressions for methods omit the return keyword and use => (goes to) to associate the method signature (including
+its arguments) with its implementation
 
 
-   --------------------
+
+----------------------
+    properties de asagidaki kodu istifade edib, maraqli netice alinir. properties with lambda expression 
+    public bool NameBeginsWithS => Name?[0] == 'S';
+--------------------
+
+    ----------Type Inference and Anonymous Types---------------------------------
 
 #endregion
 
