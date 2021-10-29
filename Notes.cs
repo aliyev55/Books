@@ -412,3 +412,41 @@ $"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}")); => result is Name
 
 
 -------
+
+#region Testing  UNIT TESTING--------------------------------------------------------------------
+----------------------
+
+3 Test Frameworks:
+
+
+mstest --->>>>>This template creates a project configured for the MS Test framework, which is produced by Microsoft.
+nunit ------->>>>>> This template creates a project configured for the NUnit framework.
+xunit  ------>>>>>>>This template creates a project configured for the XUnit framework
+
+
+
+
+  ////  proyek yaradilandan sonra icinde folderde bu komandlar calisdirilmali 
+{
+    dotnet new xunit - o SimpleApp.Tests--framework netcoreapp3.1
+dotnet sln add SimpleApp.Tests
+dotnet add SimpleApp.Tests reference SimpleApp
+    }
+
+   ------ Removing the Default Test Class
+
+{
+    Remove-Item SimpleApp.Tests/UnitTest1.cs   // it runs in VS package console
+
+    }
+
+    -----Add class Testing + add reference to Project
+
+    unitTest 3 steps 
+
+    arrange
+    act
+    assert
+
+
+#endregion
