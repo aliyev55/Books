@@ -448,5 +448,39 @@ dotnet add SimpleApp.Tests reference SimpleApp
     act
     assert
 
+    --------------------------Sample--------
 
+      [Fact]
+public void CanChangeProductName()
+{
+    // Arrange
+    var p = new Product { Name = "Test", Price = 100M };
+    // Act
+    p.Name = "New Name";
+    //Assert
+    Assert.Equal("New Name", p.Name);
+}
+
+
+Equal(expected, result)             This method asserts that the result is equal to the expected outcome. 
+NotEqual(expected, result)          This method asserts that the result is not equal to the expected outcome.
+True(result)                        This method asserts that the result is true.
+False(result)                       This method asserts that the result is false.
+IsType(expected, result)            This method asserts that the result is of a specific type.
+IsNotType(expected, result)         This method asserts that the result is not a specific type.
+IsNull(result)                      This method asserts that the result is null.
+IsNotNull(result)                   This method asserts that the result is not null.
+InRange(result, low, high)          This method asserts that the result falls between low and high.
+NotInRange(result, low, high)       This method asserts that the result falls outside low and high.
+Throws(exception, expression)       This method asserts that the specified expression throws a specific exception type.
+
+
+
+
+
+    dotnet test for to run app   // command line run;
+
+
+    Assert.Equal method that
+accepts an argument that implements the IEqualityComparer<T> interface so that the objects can be compared
 #endregion
