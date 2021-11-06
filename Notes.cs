@@ -534,3 +534,91 @@ SetupGet method to specify the result that will be returned when the property va
 ...
 }
 #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#region SportsCar
+dotnet new globaljson --sdk - version 3.1.101--output SportsSln/SportsStore
+dotnet new web --no - https--output SportsSln/SportsStore --framework netcoreapp3.1
+dotnet new sln - o SportsSln
+ dotnet sln SportsSln add SportsSln/SportsStore
+
+ dotnet new xunit - o SportsSln / SportsStore.Tests--framework netcoreapp3.1
+dotnet sln SportsSln add SportsSln/SportsStore.Tests
+dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
+
+    dotnet add SportsSln/SportsStore.Tests package Moq --version 4.13.1
+
+    -----------------
+
+    ConfigureServices  ->used throughout the application and
+that are accessed through a feature called dependency injection
+
+    AddControllersWithViews ->sets up the shared objects required by applications using the MVC Framework
+
+
+    ASP.NET Core receives HTTP requests and passes them along a request pipeline, which is populated with middleware
+components registered in the Configure method
+
+The Middleware Methods Used in Listing (Configure Metod)
+
+UseDeveloperExceptionPage() ->This extension method displays details of exceptions that occur in the application,
+UseStatusCodePages() ->This extension method adds a simple message to HTTP responses
+UseStaticFiles() ->method enables support for serving static content from the wwwroot folder
+
+    @using SportsStore.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+The @addTagHelper statement enables the built-in tag helpers, which I use later to create HTML elements
+
+
+
+adding EF to sln
+
+important 2 packages
+
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.1
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 3.1.1
+
+
+
+to install Global EF tools; First uninstall default tools and reload;
+dotnet tool uninstall --global dotnet-ef
+dotnet tool install --global dotnet-ef --version 3.1.1
+
+
+
+    connection String sample :
+
+    "ConnectionStrings": {
+    "SportsStoreConnection": "Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;MultipleActiveResultSets=true"
+
+TIP:
+
+    Each database server requires its own connection string format. A helpful site for formulating connection strings is
+    www.connectionstrings.com.
+
+
+
+        db context !
+
+
+public class StoreDbContext : DbContext
+{
+    public StoreDbContext(DbContextOptions<StoreDbContext> options)
+    : base(options) { }
+    public DbSet<Product> Products { get; set; }
+}
+
+IQueryable--->The IQueryable<T> interface is useful because it allows a collection of objects to be queried efficiently
