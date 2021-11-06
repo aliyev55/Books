@@ -621,4 +621,13 @@ public class StoreDbContext : DbContext
     public DbSet<Product> Products { get; set; }
 }
 
-IQueryable--->The IQueryable<T> interface is useful because it allows a collection of objects to be queried efficiently
+IQueryable--->The IQueryable<T> interface is useful because it allows a collection of objects 
+    to be queried efficiently
+    Product objects from the database and then discard the ones that 
+    I don’t want, which becomes an expensive operation as the
+amount of data used by an application increases. 
+    It is for this reason that the IQueryable<T> interface is typically used instead
+of IEnumerable<T> in database repository interfaces and classes
+
+
+Ienumerablede datani cekir sonra filtre edir Iquerable da selecti db gonderir
