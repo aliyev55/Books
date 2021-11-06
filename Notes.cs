@@ -483,4 +483,54 @@ Throws(exception, expression)       This method asserts that the specified expre
 
     Assert.Equal method that
 accepts an argument that implements the IEqualityComparer<T> interface so that the objects can be compared
+
+
+    ---------------------------------
+
+    ferqli yazilis qaydasi :
+
+       class FakeDataSource : IDataSource
+{
+    public FakeDataSource(Product[] data) => Products = data;
+    public IEnumerable<Product> Products { get; set; }
+
+
+    ----------------------------------
+
+
+    To test create moq objects
+
+
+        A better approach is to use a mocking package, which makes it easy to create fake—or mock—objects for tests.There are
+many mocking packages available, but the one I use(and have for years) is called Moq
+
+        dotnet add SimpleApp.Tests package Moq --version 4.13.1  install;
+
+
+        SET mock data :
+
+         var mock = new Mock<IDataSource>();
+    // Arrange
+    Product[] testData = new Product[] {
+new Product { Name = "P1", Price = 75.10M },
+new Product { Name = "P2", Price = 120M },
+new Product { Name = "P3", Price = 110M }
+};
+    
+
+    mock.SetupGet(m => m.Products).Returns(testData);
+
+
+
+    The Mock object I created will fake the IDataSource interface. To create an implementation of the Product property, I use the
+SetUpGet method, like this:
+...
+mock.SetupGet(m => m.Products).Returns(testData);
+
+
+    The SetupGet method is used to implement the getter for a property.The argument to this method is a lambda expression
+that specifies the property to be implemented, which is Products in this example.The Returns method is called on the result of the
+SetupGet method to specify the result that will be returned when the property value is read.
+...
+}
 #endregion
