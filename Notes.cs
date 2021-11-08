@@ -602,7 +602,7 @@ dotnet tool install --global dotnet-ef --version 3.1.1
     connection String sample :
 
     "ConnectionStrings": {
-    "SportsStoreConnection": "Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;MultipleActiveResultSets=true"
+    "SportsStoreConnection": "Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;MultipleActiveResultSets=true; Integrated Security = true"
 
 TIP:
 
@@ -631,3 +631,187 @@ of IEnumerable<T> in database repository interfaces and classes
 
 
 Ienumerablede datani cekir sonra filtre edir Iquerable da selecti db gonderir
+
+
+
+sONRA Dependency injection vasitesi ile Interface classa baglanir
+
+
+//addmigration//
+powerShellde dotnet ef migrations add Initial // migration elave etmek ucun
+
+calismasa EF toolu yeniden Powershellden yuklemek lazimdir
+
+//bu da package console  commands:
+Add-Migration AddBlogCreatedTimestamp
+Update-Database
+
+
+
+
+initiate db ---->
+
+Seed:  Sample---->
+
+       public static void EnsurePopulated(IApplicationBuilder app)
+{
+    StoreDbContext context = app.ApplicationServices
+    .CreateScope().ServiceProvider.GetRequiredService<StoreDbContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+    if (!context.Products.Any())
+    {
+        context.Products.AddRange(
+        new Product
+        {
+            Name = "Kayak",
+            Description = "A boat for one person",
+            Category = "Watersports",
+            Price = 275
+        },
+        new Product
+        {
+            Name = "Lifejacket",
+            Description = "Protective and fashionable",
+            Category = "Watersports",
+            Price = 48.95m
+        }, new Product
+        {
+            Name = "Soccer Ball",
+            Description = "FIFA-approved size and weight",
+            Category = "Soccer",
+            Price = 19.50m
+        },
+new Product
+{
+Name = "Corner Flags",
+Description = "Give your playing field a professional touch",
+Category = "Soccer",
+Price = 34.95m
+},
+new Product
+{
+Name = "Stadium",
+Description = "Flat-packed 35,000-seat stadium",
+Category = "Soccer",
+Price = 79500
+},
+new Product
+{
+Name = "Thinking Cap",
+Description = "Improve brain efficiency by 75%",
+Category = "Chess",
+Price = 16
+},
+new Product
+{
+Name = "Unsteady Chair",
+Description = "Secretly give your opponent a disadvantage",
+Category = "Chess",
+Price = 29.95m
+},
+new Product
+{
+Name = "Human Chess Board",
+Description = "A fun game for the family",
+Category = "Chess",
+Price = 75
+},
+new Product
+{
+Name = "Bling-Bling King",
+Description = "Gold-plated, diamond-studded King",
+Category = "Chess",
+Price = 1200
+}
+);
+        context.SaveChanges();
+    }
+}
+    }
+
+
+Explanation
+
+    The static EnsurePopulated method receives an IApplicationBuilder argument, which is the interface used in the Configure
+method of the Startup class to register middleware components to handle HTTP requests. IApplicationBuilder also provides
+access to the application’s services, including the Entity Framework Core database context service.
+The EnsurePopulated method obtains a StoreDbContext object through the IApplicationBuilder interface and calls the
+Database.Migrate method if there are any pending migrations, which means that the database will be created and prepared so that
+it can store Product objects. Next, the number of Product objects in the database is checked. If there are no objects in the database,
+then the database is populated using a collection of Product objects using the AddRange method and then written to the database
+using the SaveChanges method.
+
+
+    then add 
+    SeedData.EnsurePopulated(app); to Startup -> configuration() method;
+
+
+
+
+
+What is Dependency Injection
+
+using SportsStore.Models;
+namespace SportsStore.Controllers
+{
+    public class HomeController : Controller
+    {
+        private IStoreRepository repository;
+        public HomeController(IStoreRepository repo)
+        {
+            repository = repo;
+        }
+        public IActionResult Index() => View(repository.Products);
+    }
+}
+
+When ASP.NET Core needs to create a new instance of the HomeController class to handle an HTTP request, it will inspect the
+constructor and see that it requires an object that implements the IStoreRepository interface. To determine what implementation
+class should be used, ASP.NET Core consults the configuration in the Startup class, which tells it that EFStoreRepository should be
+used and that a new instance should be created for every request. ASP.NET Core creates a new EFStoreRepository object and uses it
+to invoke the HomeController constructor to create the controller object that will process the HTTP request.
+This is known as dependency injection, and its approach allows the HomeController object to access the application’s repository
+through the IStoreRepository interface without knowing which implementation class has been configured.I could reconfigure
+the service to use a different implementation class—one that doesn’t use Entity Framework Core, for example—and dependency
+injection means that the controller will continue to work without changes.
+
+
+
+
+    Mock Test of SportStore : 
+
+   Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+mock.Setup(m => m.Products).Returns((new Product[] {
+new Product {ProductID = 1, Name = "P1"},
+new Product {ProductID = 2, Name = "P2"}
+}).AsQueryable<Product>());
+HomeController controller = new HomeController(mock.Object);
+// Act
+IEnumerable<Product> result =
+(controller.Index() as ViewResult).ViewData.Model
+as IEnumerable<Product>;
+// Assert
+Product[] prodArray = result.ToArray();
+Assert.True(prodArray.Length == 2);
+Assert.Equal("P1", prodArray[0].Name);
+Assert.Equal("P2", prodArray[1].Name);
+
+
+
+
+
+Must!!!!!!!!!!!!!!!
+
+Pagination:
+
+Adding Pagination
+    public int PageSize = 4;
+
+public ViewResult Index(int productPage = 1)
+=> View(repository.Products
+.OrderBy(p => p.ProductID)
+.Skip((productPage - 1) * PageSize)
+.Take(PageSize)); filter!!!
