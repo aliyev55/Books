@@ -815,3 +815,9 @@ public ViewResult Index(int productPage = 1)
 .OrderBy(p => p.ProductID)
 .Skip((productPage - 1) * PageSize)
 .Take(PageSize)); filter!!!
+
+
+
+
+    ------Notes Chapter 7 ------ SportStore
+
