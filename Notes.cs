@@ -821,3 +821,8 @@ public ViewResult Index(int productPage = 1)
 
     ------Notes Chapter 7 ------ SportStore
 
+    dotnet new xunit - o SportsSln / SportsStore.Tests--framework netcoreapp3.1
+dotnet sln SportsSln add SportsSln/SportsStore.Tests
+dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
+
+    dotnet add SportsSln/SportsStore.Tests package Moq --version 4.13.1
