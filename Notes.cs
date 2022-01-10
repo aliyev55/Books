@@ -826,3 +826,44 @@ dotnet sln SportsSln add SportsSln/SportsStore.Tests
 dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
 
     dotnet add SportsSln/SportsStore.Tests package Moq --version 4.13.1
+
+
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseDeveloperExceptionPage(); -->>>>> Exception
+    app.UseStatusCodePages();   --->404 403 401
+    app.UseStaticFiles(); or serving static content from the wwwroot folder. js bootstrap
+    app.UseRouting();
+    app.UseEndpoints(endpoints => {
+        endpoints.MapDefaultControllerRoute();
+    });
+
+    The MapDefaultControllerRoute method used in Listing 7 - 4 tells ASP.NET Core how 
+        to match URLs to controller classes.
+
+
+
+
+        First add packages
+        ----Add  EF packages----------------------
+
+        dotnet add package Microsoft.EntityFrameworkCore.Design--version 3.1.1
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer--version 3.1.1
+
+
+
+
+       =====add db context------------------>
+
+
+
+        namespace SportsStore.Models
+{
+    public class StoreDbContext : DbContext
+    {
+        public StoreDbContext(DbContextOptions<StoreDbContext> options)
+        : base(options) { }
+        public DbSet<Product> Products { get; set; }
+    }
+}
