@@ -826,3 +826,11 @@ dotnet sln SportsSln add SportsSln/SportsStore.Tests
 dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
 
     dotnet add SportsSln/SportsStore.Tests package Moq --version 4.13.1
+
+
+    ConfigureServices =>>>><in Startup>>>> {{{
+    method is used to set up objects, known as services, that can be used throughout the application and
+that are accessed through a feature called dependency injection
+
+
+    }}}}
