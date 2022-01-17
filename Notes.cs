@@ -839,4 +839,46 @@ dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
 that are accessed through a feature called dependency injection
 
 
-    }}}}
+
+Must in startUp  ==>config
+
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+    }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseDeveloperExceptionPage();
+        app.UseStatusCodePages();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseEndpoints(endpoints => {
+            endpoints.MapDefaultControllerRoute();
+        });
+    }
+
+}}}}
+
+
+
+How pipeline works :  
+    ASP.NET Core receives HTTP requests and passes them along a request pipeline, which is populated with middleware
+components registered in the Configure method. Each middleware component is able to inspect requests, modify them, generate
+a response, or modify the responses that other components have produced.
+
+
+
+-----------------------------------
+DbContext first Introduce
+namespace SportsStore.Models
+{
+    public class StoreDbContext : DbContext
+    {
+        public StoreDbContext(DbContextOptions<StoreDbContext> options)
+        : base(options) { }
+        public DbSet<Product> Products { get; set; }
+    }
+}
