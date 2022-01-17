@@ -821,6 +821,12 @@ public ViewResult Index(int productPage = 1)
 
     ------Notes Chapter 7 ------ SportStore
 
+
+    dotnet new globaljson --sdk - version 3.1.101--output SportsSln/SportsStore
+dotnet new web --no - https--output SportsSln/SportsStore --framework netcoreapp3.1
+dotnet new sln - o SportsSln
+ dotnet sln SportsSln add SportsSln/SportsStore
+
     dotnet new xunit - o SportsSln / SportsStore.Tests--framework netcoreapp3.1
 dotnet sln SportsSln add SportsSln/SportsStore.Tests
 dotnet add SportsSln/SportsStore.Tests reference SportsSln/SportsStore
